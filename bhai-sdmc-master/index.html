@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css" />
+  <!-- datatable styling -->
+  <link rel="stylesheet" href="/static/datatable/jquery.dataTables.min.css" />
+  <!-- cutom style -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- google fonts -->
+  <link href="/static/fonts/rubik.css" rel="stylesheet" />
+  <!-- select2 -->
+  <link href="/static/select2/select2.min.css" rel="stylesheet" />
+  <title>Shree Durga Machine Chain</title>
+</head>
+
+<body>
+  <div id="loader"></div>
+  <div class="container">
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark mb-2">
+      <a class="navbar-brand" href="/">Shree Durga Machine Chain</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item {% if dashboard %} active {% endif %}">
+            <a class="nav-link" href="/">Dashboard</a>
+          </li>
+          <li class="nav-item {% if users %} active {% endif %}">
+            <a class="nav-link" href="/users">Users</a>
+          </li>
+          <li class="nav-item {% if new_bill %} active {% endif %}">
+            <a class="nav-link" href="/transactions">New bill</a>
+          </li>
+          <!-- <li class="nav-item "> -->
+          <!-- <a class="nav-link" href="accounts/logout">Log out</a> -->
+          <!-- </li> -->
+        </ul>
+      </div>
+    </nav>
+    <form id="transaction-form" class="row" action="/transactions" method="POST" autocomplete="off">
+      <div class="form-group col-sm-12 col-md-8 mx-auto form-bg">
+        <h2 class="text-center"><u>New Bill</u></h2>
+        <label for="name">Name</label>
+        <select onchange="populateContact(this.value)" class="form-control" id="name-dropdown" name="name" required>
+          <option></option>
+          <option value="8866873390">Saurabh Panja</option>
+          <option value="9426569628">Pradeep Panja</option>
+
+        </select>
+
+        <label for="contact">Contact</label>
+        <input class="form-control" type="text" name="contact" id="contact" placeholder="Contact" maxlength="10"
+          minlength="10" readonly />
+        <hr />
+
+        <div id="all-items">
+          <div class="row">
+            <div class="col-sm-8">
+              <label for="item">Item</label>
+              <input class="form-control" type="text" name="item" id="item" placeholder="Item" required />
+            </div>
+            <div class="col-sm-4">
+              <label for="Category">Category</label>
+              <select class="form-control" id="categories-dropdown" name="category" required>
+                <option></option>
+                <option value="Milan">Milan</option>
+                <option value="Curb">Curb</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <label for="gross-weight">Gross Weight</label>
+              <input class="form-control" type="text" name="gross-weight" id="gross-weight" placeholder="Gross Weight"
+                required />
+            </div>
+            <div class="col-sm-4">
+              <label for="less-weight">Less Weight</label>
+              <input class="form-control" type="text" name="less-weight" id="less-weight" placeholder="Less Weight"
+                value="0" required />
+            </div>
+            <div class="col-sm-4">
+              <label for="net-weight">Net Weight</label>
+              <input class="form-control" type="text" name="net-weight" id="net-weight" placeholder="Net Weigth"
+                readonly />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <label for="tunch">Tunch</label>
+              <input class="form-control" type="text" name="tunch" id="tunch" placeholder="Tunch" required />
+            </div>
+            <div class="col-sm-4">
+              <label for="wastage">Wastage</label>
+              <input class="form-control" type="text" name="wastage" id="wastage" placeholder="Wastage" required />
+            </div>
+            <div class="col-sm-4">
+              <label for="fine-weight">Fine Weigth</label>
+              <input class="form-control" type="text" name="fine-weight" id="fine-weight" placeholder="Fine Weigth"
+                readonly />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-danger my-2 p-1 float-right" id="add-item-element">
+              Add Item
+            </button>
+          </div>
+        </div>
+        <hr />
+        <div class="item-table">
+          <table class="table-bill">
+            <tr>
+              <td>Sr.</td>
+              <td>Item Description</td>
+              <td>Pcs</td>
+              <td>Gross weight</td>
+              <td>Less weight</td>
+              <td>Net weight</td>
+              <td>Tunch</td>
+              <td>Wst</td>
+              <td>Fine weight</td>
+              <td>Net Amt.</td>
+            </tr>
+            <tr>
+              <td id="item_bill"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Total</td>
+              <td colspan="9"></td>
+            </tr>
+          </table>
+        </div>
+        <hr />
+        <div class="table-container">
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4">Cash</div>
+                <div class="col-4">Fine</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-4">Est O/s</div>
+                <div class="col-4"></div>
+                <div class="col-4">54.773 Dr</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-4">Last O/s</div>
+                <div class="col-4">660.00 Dr.</div>
+                <div class="col-4">371.132 Dr.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-4">Total O/s</div>
+                <div class="col-4">660.00 Dr.</div>
+                <div class="col-4">425.905 Dr.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-success my-2 mx-auto" type="submit">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="/static/bootstrap/jquery-3.5.1.slim.min.js"></script>
+
+  <script src="/static/bootstrap/popper.min.js"></script>
+  <script src="/static/bootstrap/bootstrap.min.js"></script>
+  <script src="/static/datatable/datatables.min.js"></script>
+  <!-- select2 -->
+  <script src="/static/select2/select2.min.js"></script>
+  <script src="main.js"></script>
+  <script></script>
+</body>
+
+</html>

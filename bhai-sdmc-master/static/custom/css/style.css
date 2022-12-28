@@ -1,0 +1,49 @@
+body{
+    background: #eacda3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #d6ae7b, #eacda3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #d6ae7b, #eacda3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    font-family: 'Rubik', sans-serif;
+}
+
+nav {
+  background-color: #3a6186;
+}
+.form-bg {
+  background: #e0eafc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.table-container{
+    padding: 1rem;
+    background-color: whitesmoke;
+    border-radius: 1rem;
+}
+
+.cool-heading{
+  background-color: whitesmoke;
+  margin: 0;
+  padding: 0;
+  padding-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  font-weight: 800;
+  border-radius: 1rem;
+}
+#loader{
+  background-image: url("/static/loader.gif");
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-color: white;
+}
